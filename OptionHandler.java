@@ -30,11 +30,20 @@ public class OptionHandler{
 	/**
 	 * Method to add Option to options ArrayList.
 	 * @author
-	 * @param o Option object to be added to options ArrayList.
+	 * @param s String choice to create Option with.
 	 */
-	public void addOption(Option o){
+	public void addOption(String s){
+		Option o = new Option(s);
 		options.add(o);
 		numOptions++;
+	}
+
+	public void showOptions(){
+		int i = 1;
+		for(Option temp : options){
+			System.out.println("\t" + i + " : " + temp.getText());
+			i++;
+		}
 	}
 
 	/**
