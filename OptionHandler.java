@@ -1,5 +1,7 @@
 package DecisionMaker;
 
+import java.util.ArrayList;
+
 /**
  * Class to manage multiple options and their functionality.
  * @author Dennis Myers
@@ -41,6 +43,6 @@ public class OptionHandler{
 	 */
 	OptionHandler(){
 		numOptions = 0;
-		options = new ArrayList<Options>();
+		options = new ArrayList<Option>();
 	}
 }
