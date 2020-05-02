@@ -49,9 +49,21 @@ public class DecisionMain{
 					System.out.println("\n" + response + " has been added!\n");
 					break;
 				case "2":
-					System.out.println("\nIn erase option\n");
+					if(oh.getNumOptions() == 0){
+						System.out.println("\nNo options have been entered yet.\n");
+						break;
+					}
+					oh.showOptions();
+					System.out.println("\nEnter option you wish to remove :");
+					System.out.print("> ");
+					response = sc.nextLine();
+					System.out.println("\n" + oh.removeOption(response) + "\n");
 					break;
 				case "3":
+					if(oh.getNumOptions() == 0){
+						System.out.println("\nNo options have been entered  yet.\n");
+						break;
+					}
 					System.out.println("\nPrinting options.\n");
 					oh.showOptions();
 					System.out.println();
