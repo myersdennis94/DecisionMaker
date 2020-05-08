@@ -11,14 +11,6 @@ public class OptionHandler{
 	private ArrayList <Option> options;
 
 	/**
-	 * Method to hold functionality for single decision.
-	 * @author 
-	 */
-	public void oneDecision(){
-
-	}
-
-	/**
 	 * Method to hold functionality for multiple runs before decision.
 	 * @author
 	 * @param runs Integer value of runs to be made before decision made.
@@ -75,6 +67,7 @@ public class OptionHandler{
 	/**
 	 * Method to get numOptions field value
 	 * @author Dennis Myers
+	 * @return int value of numOptions
 	 */
 	public int getNumOptions(){
 		return numOptions;
