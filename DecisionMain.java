@@ -1,7 +1,7 @@
 package DecisionMaker;
 
 import java.util.Scanner;
-import java.util.InputMismatchException;
+import java.util.NumberFormatException;
 
 /**
  * Class to contain general functionality for DecisionMaker. Creation of
@@ -69,7 +69,20 @@ public class DecisionMain{
 					System.out.println();
 					break;
 				case "4":
-					System.out.println("\nIn run decision maker\n");
+					System.out.println("\nDecision Maker initiated!\n");
+					while(true){
+						System.out.println("How many trials would you like for your decision?")
+						System.out.println("> ");
+						response = sc.nextLine();
+						try{
+							oh.multiDecision(Integer.parseInt(response));
+						}catch(NumberFormatException e){
+							System.out.println("\nInvalid input. Please enter an integer value.\n");
+							continue;
+						}
+
+						break;
+					}
 					break;
 				case "5":
 					System.out.println("\nExiting program.");
