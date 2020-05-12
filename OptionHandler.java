@@ -14,17 +14,14 @@ public class OptionHandler{
 
 	/**
 	 * Method to hold functionality for multiple runs before decision.
-	 * Creates int array to hold counts. Uses random function to counts
-	 * within number of option bounds.
 	 * @author Dennis Myers
 	 * @param runs Integer value of runs to be made before decision made.
 	 */
 	public void multiDecision(int runs){
-		int[] count = new int[options.size()];
 		for(int i = 0; i < runs; i++){
-			count[ran.nextInt(options.size())]++;
+			options.get(ran.nextInt(numOptions)).increment();
 		}
-		showResults(count);
+		showResults();
 	}
 
 	/**
@@ -50,6 +47,7 @@ public class OptionHandler{
 			if(temp.getText().equals(s)){
 				options.remove(temp);
 				found = true;
+				numOptions--;
 				break;
 			}
 		}
@@ -84,18 +82,19 @@ public class OptionHandler{
 	/**
 	 * Method to print results of decision making.
 	 * @author Dennis Myers
-	 * @param arr Integer array of counts from multiDecision.
 	 */
-	public void showResults(int[] arr){
+	public void showResults(){
 		System.out.println("\nResults of Decion Maker :");
 		int max = 0;
+		int i = 1;
 		String winner = "";
-		for(int i = 0; i < options.size(); i++){
-			System.out.println("\t" + (i + 1) + " : " + arr[i] + " - " + options.get(i).getText());
-			if(arr[i] > max){
-				max = arr[i];
-				winner = options.get(i).getText();
+		for(Option o : options){
+			System.out.println("\t" + i + " : " + o.getNumTimes() + " - " + o.getText());
+			if(o.getNumTimes() > max){
+				max = o.getNumTimes();
+				winner = o.getText();
 			}
+			i++;
 		}
 		System.out.println("\n" + winner + " wins with " + max + " votes!\n");
 	}

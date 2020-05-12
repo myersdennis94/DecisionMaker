@@ -33,4 +33,13 @@ public class Option{
 	public String getText(){
 		return text;
 	}
+
+	/**
+	 * Method to return number of times chosen.
+	 * @author
+	 * @return Number of times chosen.
+	 */
+	 public int getNumTimes(){
+		 return numTimes;
+	 }
 }
