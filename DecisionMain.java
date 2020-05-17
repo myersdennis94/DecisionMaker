@@ -18,6 +18,7 @@ public class DecisionMain{
 	private JButton bAddRow,bClearTb,bUpdate,bRun;
 	private JTable tb;
 	private JTextArea t;
+	private JScrollPane sc;
 	private Dimension screensize;
 	private int width, height, count;
 	private OptionHandler oh;
@@ -55,6 +56,7 @@ public class DecisionMain{
 		bUpdate = new JButton("Update Choices");
 		bRun = new JButton("Run Decision Maker");
 		t = new JTextArea("Hello!");
+		sc = new JScrollPane();
 		model = new DefaultTableModel();
 		tb = new JTable(model){
 			public boolean isCellEditable(int row, int column){
@@ -87,8 +89,9 @@ public class DecisionMain{
 		model.addColumn("#");
 		model.addColumn("Choice");
 		model.addRow(new Object[]{1,""});
-		tb.setBounds(20,30,(width/2)-20,height-150);
-		tb.setRowHeight(tb.getHeight()/10);
+		sc.setBounds(20,30,(width/2)-20,height-150);
+		sc.setViewportView(tb);
+		tb.setRowHeight(sc.getHeight()/10);
 		tb.setSelectionBackground(Color.white);
 
 		t.setBounds((width/2)+40,30,(width/2)-100,(height/2)-40);
@@ -103,7 +106,7 @@ public class DecisionMain{
 	 * @author Dennis Myers
 	 */
 	public void addComponents(){
-		f.add(tb);
+		f.add(sc);
 		f.add(bClearTb);
 		f.add(bAddRow);
 		f.add(bUpdate);
