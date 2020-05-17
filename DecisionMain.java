@@ -39,6 +39,10 @@ public class DecisionMain{
 		setListeners();
 	}
 
+	/**
+	 * Method to get information about user screen size.
+	 * @author Dennis Myers
+	 */
 	public void getInfo(){
 		screensize = Toolkit.getDefaultToolkit().getScreenSize();
 		width = new Double(screensize.getWidth()).intValue()/2;
@@ -131,6 +135,8 @@ public class DecisionMain{
 	 * @author Dennis Myers
 	 */
 	public void setListeners(){
+
+		// action handling of + Row button
 		bAddRow.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				model.addRow(new Object[]{count,""});
@@ -138,6 +144,7 @@ public class DecisionMain{
 			}
 		});
 
+		// action handling of Clear Choices button
 		bClearTb.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				model = new DefaultTableModel();
@@ -150,6 +157,7 @@ public class DecisionMain{
 			}
 		});
 
+		// action handling of Update Choices button
 		bUpdate.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				oh.clearOptions();
@@ -162,6 +170,30 @@ public class DecisionMain{
 						i--;
 					}else{
 						oh.addOption(model.getValueAt(i,1).toString());
+					}
+				}
+			}
+		});
+
+		// action handling of Run Decision Maker button
+		bRun.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(oh.getNumOptions() < 2){
+					JOptionPane.showMessageDialog(f,"Not enough choices loaded.","Error",JOptionPane.WARNING_MESSAGE);
+				}else{
+					String reply = JOptionPane.showInputDialog(f,"Enter the number of trials.","Trail Selector",JOptionPane.INFORMATION_MESSAGE);
+					if(reply == null){
+						JOptionPane.showMessageDialog(f,"Decision Maker cancelled.","Warning",JOptionPane.WARNING_MESSAGE);
+					}else if(!reply.matches("-?(0|[1-9]\\d*)")){
+						JOptionPane.showMessageDialog(f,"Trail count must be integer value greater than 0.","Warning",JOptionPane.WARNING_MESSAGE);
+					}else{
+						if(Integer.parseInt(reply) < 1){
+							JOptionPane.showMessageDialog(f,"Trail count must be integer value greater than 0.","Warning",JOptionPane.WARNING_MESSAGE);
+						}else{
+							oh.multiDecision(Integer.parseInt(reply));
+							t.append("\nWinner was : " + oh.getWinner());
+							JOptionPane.showMessageDialog(f,"Decision made successfully!","Success",JOptionPane.INFORMATION_MESSAGE);
+						}
 					}
 				}
 			}
