@@ -3,9 +3,9 @@ package DecisionMaker;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.event.*;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.Insets;
 import java.lang.Double;
 
 /**
@@ -15,13 +15,13 @@ import java.lang.Double;
 public class DecisionMain{
 
 	private JFrame f;
-	private JButton bAddRow,bClearTb,bUpdate;
+	private JButton bAddRow,bClearTb,bUpdate,bRun;
 	private JTable tb;
+	private JTextArea t;
 	private Dimension screensize;
 	private int width, height, count;
-	private Insets fInsets;
 	private OptionHandler oh;
-	private DefaultTableModel model;
+	private DefaultTableModel model,statModel;
 
 	/**
 	 * Constructor for DecisionMain.
@@ -53,8 +53,30 @@ public class DecisionMain{
 		bAddRow = new JButton("+ Row");
 		bClearTb = new JButton("Clear Choices");
 		bUpdate = new JButton("Update Choices");
+		bRun = new JButton("Run Decision Maker");
+		t = new JTextArea("Hello!");
 		model = new DefaultTableModel();
-		tb = new JTable(model);
+		tb = new JTable(model){
+			public boolean isCellEditable(int row, int column){
+				if(column == 0){
+					return false;
+				}else{
+					return true;
+				}
+			}
+
+			public boolean isCellSelected(int row, int column){
+				if(column == 0){
+					return false;
+				}else{
+					if(row == tb.getSelectedRow() && column == tb.getSelectedColumn()){
+						return true;
+					}else{
+						return false;
+					}
+				}
+			}
+		};
 	}
 
 	/**
@@ -67,10 +89,13 @@ public class DecisionMain{
 		model.addRow(new Object[]{1,""});
 		tb.setBounds(20,30,(width/2)-20,height-150);
 		tb.setRowHeight(tb.getHeight()/10);
+		tb.setSelectionBackground(Color.white);
 
+		t.setBounds((width/2)+40,30,(width/2)-100,(height/2)-40);
 		bClearTb.setBounds(20,height-100,((width/2)/3)-20,40);
 		bAddRow.setBounds(((width/2)/3)+20,height-100,((width/2)/3)-20,40);
 		bUpdate.setBounds(((width)/3)+20,height-100,((width/2)/3)-20,40);
+		bRun.setBounds((width/2)+60,(height/2)+20,(width/2)-140,(height/4)-20);
 	}
 
 	/**
@@ -82,6 +107,8 @@ public class DecisionMain{
 		f.add(bClearTb);
 		f.add(bAddRow);
 		f.add(bUpdate);
+		f.add(bRun);
+		f.add(t);
 	}
 
 	/**
@@ -116,6 +143,24 @@ public class DecisionMain{
 				model.addRow(new Object[]{1,""});
 				tb.setModel(model);
 				count = 2;
+				oh.clearOptions();
+			}
+		});
+
+		bUpdate.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				oh.clearOptions();
+				for(int i = 0; i < model.getRowCount(); i++){
+					if(model.getValueAt(i,1).toString().equals("")){
+						model.removeRow(i);
+						for(int j = i; j < model.getRowCount(); j++){
+							model.setValueAt(j+1,j,0);
+						}
+						i--;
+					}else{
+						oh.addOption(model.getValueAt(i,1).toString());
+					}
+				}
 			}
 		});
 	}
