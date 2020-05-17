@@ -99,6 +99,11 @@ public class OptionHandler{
 		System.out.println("\n" + winner + " wins with " + max + " votes!\n");
 	}
 
+	public void clearOptions(){
+		options.clear();
+		numOptions = 0;
+	}
+
 	/**
 	 * Constructor for OptionHandler class.
 	 * @author Dennis Myers
