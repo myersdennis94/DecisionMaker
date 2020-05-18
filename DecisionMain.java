@@ -18,12 +18,14 @@ public class DecisionMain{
 	private JButton bAddRow,bClearTb,bUpdate,bRun,bRet;
 	private JTable tb,tbs;
 	private JTextArea t;
+	private JTextPane i;
 	private JScrollPane sc;
 	private Dimension screensize;
 	private int width, height, count;
 	private OptionHandler oh;
 	private DefaultTableModel model,statModel;
 	private boolean initialized;
+	private final String IMAGE_SRC = DecisionMain.class.getResource("/images/logo.png").toString();
 
 	/**
 	 * Constructor for DecisionMain.
@@ -63,6 +65,7 @@ public class DecisionMain{
 		bRet = new JButton();
 		bRun = new JButton("Run Decision Maker");
 		t = new JTextArea("Hello!");
+		i = new JTextPane();
 		sc = new JScrollPane();
 		model = new DefaultTableModel();
 		tb = new JTable(model){
@@ -108,9 +111,13 @@ public class DecisionMain{
 		bClearTb.setBounds(20,height-100,((width/2)/3)-20,40);
 		bAddRow.setBounds(((width/2)/3)+20,height-100,((width/2)/3)-20,40);
 		bUpdate.setBounds(((width)/3)+20,height-100,((width/2)/3)-20,40);
-		bRun.setBounds((width/2)+60,(height/2)+20,(width/2)-140,(height/4)-20);
-		bRet.setBounds((width/2)+60,3*(height/4)+20,(width/2)-140,(height/4)-80);
+		bRun.setBounds((width/2)+60,(height/2)+10,(width/2)-140,40);
+		bRet.setBounds((width/2)+60,(height/2)+70,(width/2)-140,40);
 		bRet.setVisible(false);
+
+		i.setBounds((width/2)+60,(height/2)+130,200,200);
+		i.setContentType("text/html");
+		i.setText("<html><img src=" + IMAGE_SRC + "width=200 height=100></img><p>Dennis Myers - 2020</p></html>");
 	}
 
 	/**
@@ -125,6 +132,7 @@ public class DecisionMain{
 		f.add(bRun);
 		f.add(bRet);
 		f.add(t);
+		f.add(i);
 	}
 
 	/**
