@@ -2,6 +2,8 @@ package DecisionMaker;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.lang.Number;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Class to manage multiple options and their functionality.
@@ -21,7 +23,6 @@ public class OptionHandler{
 		for(int i = 0; i < runs; i++){
 			options.get(ran.nextInt(numOptions)).increment();
 		}
-		showResults();
 	}
 
 	/**
@@ -71,6 +72,47 @@ public class OptionHandler{
 	}
 
 	/**
+	 * Method to get winning choice after decision making.
+	 * @author Dennis Myers
+	 * @return String of winning choice
+	 */
+	public String getWinner(){
+		int max = 0;
+		int maxId = 0;
+		for(int i = 0; i < numOptions; i++){
+			if(options.get(i).getNumTimes() > max){
+				max = options.get(i).getNumTimes();
+				maxId = i;
+			}
+		}
+		clearTimes();
+		return (options.get(maxId).getText());
+	}
+
+	public void generateStatTable(DefaultTableModel model, boolean first){
+		if(first){
+			for(int i = 0; i < numOptions; i++){
+				model.addRow(new Object[]{i+1,options.get(i).getText(),0,0});
+			}
+		}else{
+			for(int i = 0; i < numOptions; i++){
+				model.setValueAt(new Integer(options.get(i).getNumTimes()),i,2);
+				model.setValueAt(new Integer(options.get(i).getNumTimes() + Integer.parseInt(model.getValueAt(i,3).toString())),i,3);
+			}
+		}
+	}
+
+	/**
+	 * Method to clear numTimes for all Option objects in options ArrayList.
+	 * @author Dennis Myers
+	 */
+	public void clearTimes(){
+		for(Option o : options){
+			o.setNumTimes(0);
+		}
+	}
+
+	/**
 	 * Method to get numOptions field value
 	 * @author Dennis Myers
 	 * @return int value of numOptions
@@ -97,6 +139,15 @@ public class OptionHandler{
 			i++;
 		}
 		System.out.println("\n" + winner + " wins with " + max + " votes!\n");
+	}
+
+	/**
+	 * Method to clear options ArrayList.
+	 * @author Dennis Myers
+	 */
+	public void clearOptions(){
+		options.clear();
+		numOptions = 0;
 	}
 
 	/**

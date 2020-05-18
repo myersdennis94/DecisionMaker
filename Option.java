@@ -35,6 +35,15 @@ public class Option{
 	}
 
 	/**
+	 * Method to set numTimes chosen for an option.
+	 * @author Dennis Myers
+	 * @param times Int value to set numTimes to.
+	 */
+	public void setNumTimes(int times){
+		numTimes = times;
+	}
+
+	/**
 	 * Method to return number of times chosen.
 	 * @author
 	 * @return Number of times chosen.
