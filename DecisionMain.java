@@ -174,7 +174,9 @@ public class DecisionMain{
 		// action handling of Update Choices button
 		bUpdate.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				tb.getCellEditor().stopCellEditing();
+				if(tb.getSelectedRow() != -1){
+					tb.getCellEditor().stopCellEditing();
+				}
 				oh.clearOptions();
 				sc.setViewportView(tb);
 				statModel = new DefaultTableModel();
@@ -191,6 +193,9 @@ public class DecisionMain{
 					}else{
 						oh.addOption(model.getValueAt(i,1).toString());
 					}
+				}
+				if(tb.getRowCount() == 0){
+					model.addRow(new Object[]{1,""});
 				}
 			}
 		});
