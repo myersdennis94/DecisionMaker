@@ -2,6 +2,8 @@ package DecisionMaker;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.lang.Number;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Class to manage multiple options and their functionality.
@@ -85,6 +87,19 @@ public class OptionHandler{
 		}
 		clearTimes();
 		return (options.get(maxId).getText());
+	}
+
+	public void generateStatTable(DefaultTableModel model, boolean first){
+		if(first){
+			for(int i = 0; i < numOptions; i++){
+				model.addRow(new Object[]{i+1,options.get(i).getText(),0,0});
+			}
+		}else{
+			for(int i = 0; i < numOptions; i++){
+				model.setValueAt(new Integer(options.get(i).getNumTimes()),i,2);
+				model.setValueAt(new Integer(options.get(i).getNumTimes() + Integer.parseInt(model.getValueAt(i,3).toString())),i,3);
+			}
+		}
 	}
 
 	/**
