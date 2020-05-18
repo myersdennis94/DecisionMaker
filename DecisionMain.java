@@ -15,14 +15,15 @@ import java.lang.Double;
 public class DecisionMain{
 
 	private JFrame f;
-	private JButton bAddRow,bClearTb,bUpdate,bRun;
-	private JTable tb;
+	private JButton bAddRow,bClearTb,bUpdate,bRun,bRet;
+	private JTable tb,tbs;
 	private JTextArea t;
 	private JScrollPane sc;
 	private Dimension screensize;
 	private int width, height, count;
 	private OptionHandler oh;
 	private DefaultTableModel model,statModel;
+	private boolean initialized;
 
 	/**
 	 * Constructor for DecisionMain.
@@ -31,6 +32,7 @@ public class DecisionMain{
 	DecisionMain(){
 		oh = new OptionHandler();
 		count = 2;
+		initialized = false;
 		getInfo();
 		initializeComponents();
 		setComponents();
@@ -58,6 +60,7 @@ public class DecisionMain{
 		bAddRow = new JButton("+ Row");
 		bClearTb = new JButton("Clear Choices");
 		bUpdate = new JButton("Update Choices");
+		bRet = new JButton();
 		bRun = new JButton("Run Decision Maker");
 		t = new JTextArea("Hello!");
 		sc = new JScrollPane();
@@ -83,6 +86,8 @@ public class DecisionMain{
 				}
 			}
 		};
+		statModel = new DefaultTableModel();
+		tbs = new JTable(statModel);
 	}
 
 	/**
@@ -97,12 +102,15 @@ public class DecisionMain{
 		sc.setViewportView(tb);
 		tb.setRowHeight(sc.getHeight()/10);
 		tb.setSelectionBackground(Color.white);
+		tbs.setCellSelectionEnabled(false);
 
 		t.setBounds((width/2)+40,30,(width/2)-100,(height/2)-40);
 		bClearTb.setBounds(20,height-100,((width/2)/3)-20,40);
 		bAddRow.setBounds(((width/2)/3)+20,height-100,((width/2)/3)-20,40);
 		bUpdate.setBounds(((width)/3)+20,height-100,((width/2)/3)-20,40);
 		bRun.setBounds((width/2)+60,(height/2)+20,(width/2)-140,(height/4)-20);
+		bRet.setBounds((width/2)+60,3*(height/4)+20,(width/2)-140,(height/4)-80);
+		bRet.setVisible(false);
 	}
 
 	/**
@@ -115,6 +123,7 @@ public class DecisionMain{
 		f.add(bAddRow);
 		f.add(bUpdate);
 		f.add(bRun);
+		f.add(bRet);
 		f.add(t);
 	}
 
@@ -154,6 +163,11 @@ public class DecisionMain{
 				tb.setModel(model);
 				count = 2;
 				oh.clearOptions();
+				sc.setViewportView(tb);
+				statModel = new DefaultTableModel();
+				tbs.setModel(statModel);
+				initialized = false;
+				bRet.setVisible(false);
 			}
 		});
 
@@ -161,6 +175,11 @@ public class DecisionMain{
 		bUpdate.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				oh.clearOptions();
+				sc.setViewportView(tb);
+				statModel = new DefaultTableModel();
+				tbs.setModel(statModel);
+				initialized = false;
+				bRet.setVisible(false);
 				for(int i = 0; i < model.getRowCount(); i++){
 					if(model.getValueAt(i,1).toString().equals("")){
 						model.removeRow(i);
@@ -190,14 +209,42 @@ public class DecisionMain{
 						if(Integer.parseInt(reply) < 1){
 							JOptionPane.showMessageDialog(f,"Trail count must be integer value greater than 0.","Warning",JOptionPane.WARNING_MESSAGE);
 						}else{
+							if(initialized == false){
+								setupStatModel();
+							}
 							oh.multiDecision(Integer.parseInt(reply));
+							oh.generateStatTable(statModel,false);
 							t.append("\nWinner was : " + oh.getWinner());
 							JOptionPane.showMessageDialog(f,"Decision made successfully!","Success",JOptionPane.INFORMATION_MESSAGE);
+							sc.setViewportView(tbs);
+							bRet.setText("Return to Choices");
+							bRet.setVisible(true);
 						}
 					}
 				}
 			}
 		});
+
+		bRet.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(bRet.getText() == "Return to Choices"){
+					sc.setViewportView(tb);
+					bRet.setText("Return to Statistics");
+				}else{
+					sc.setViewportView(tbs);
+					bRet.setText("Return to Choices");
+				}
+			}
+		});
+	}
+
+	public void setupStatModel(){
+		statModel.addColumn("#");
+		statModel.addColumn("Choice");
+		statModel.addColumn("Last Run Picks");
+		statModel.addColumn("Total Run Picks");
+		oh.generateStatTable(statModel,true);
+		initialized = true;
 	}
 
 	/**
