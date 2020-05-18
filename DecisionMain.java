@@ -174,6 +174,7 @@ public class DecisionMain{
 		// action handling of Update Choices button
 		bUpdate.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				tb.getCellEditor().stopCellEditing();
 				oh.clearOptions();
 				sc.setViewportView(tb);
 				statModel = new DefaultTableModel();
