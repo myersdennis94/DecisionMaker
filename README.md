@@ -4,7 +4,7 @@ This program makes a decision from user input options. Options are entered via a
 ### GUI Implementation
 The functionality of the Java GUI implementation allows for user input through a table. Rows can be added to the table via the "+ Row" button allowing for input of more options. Upon inputting options, click the "Update Options" button to update the user input options for decision making functionality. Once options are input, click "Run Decision Maker" and specify the number of trails to be taken. The textbox on screen will show the winner of the trials and the table will show the results of the trials. Any changes made to option choices will erase stats of prior runs.
 
-![Screen 1](/images/1.png)
+![Screen 1](/images/s1.png)
 
 ![Screen 2](/images/2.png)
 
