@@ -103,6 +103,8 @@ public class DecisionMain{
 		tb.setRowHeight(sc.getHeight()/10);
 		tb.setSelectionBackground(Color.white);
 		tbs.setCellSelectionEnabled(false);
+		tb.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB,0,false), "none");
+		tbs.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB,0,false), "none");
 
 		t.setBounds((width/2)+40,30,(width/2)-100,(height/2)-40);
 		bClearTb.setBounds(20,height-100,((width/2)/3)-20,40);
