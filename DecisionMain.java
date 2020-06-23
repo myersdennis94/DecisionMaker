@@ -178,7 +178,7 @@ public class DecisionMain{
 		// action handling of Update Choices button
 		bUpdate.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				if(tb.getSelectedRow() != -1){
+				if(tb.getSelectedColumn() == 1){
 					tb.getCellEditor().stopCellEditing();
 				}
 				oh.clearOptions();
