@@ -13,12 +13,13 @@ The functionality of the cpp file is to allow the user to insert items for the p
 
 ![Screen 3](/images/cli.png)
 
-### Compilation
+### Java Compilation
+Compilation of the Java implementation of DecisionMaker requires a Java Development Kit. This program was developed and tested using JDK 11.0.6.
 To compile the program, download the repository via git. Use the command
 > javac -d classes <path_to_repository_from_cwd>/*.java
 
 This will create the classes folder to hold the compiled java files in your current working directory. 
-### Running
+### Java Running
 To run the program, use the command 
 > java -cp classes DecisionMaker.DecisionMain
 
